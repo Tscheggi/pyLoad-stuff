@@ -8,5 +8,6 @@ These are scripts to have a automated sorting for Movies and Series you download
 
 - edit the Global Variables to suite your environment and Copy the file to ~/pyload/scripts/unrar_finished; ~/pyload/scripts/package_finished
 - than activate the "external scripts" plugin in pyLoad 
+- disable deep extraction
 - restart pyLoad
 - see the magic happen
