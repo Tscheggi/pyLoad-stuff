@@ -6,7 +6,7 @@ BaseDir=/media/5a24e136-09b9-48e1-95db-b44d5db3e28a
 DownloadDir=${BaseDir}/Medien/Downloads
 MediaDir=${BaseDir}/Medien
 LogFile=$BaseDir/Scripts/filebot.log
-ExtScript=/root/filebot.sh
+ExtScript=/root/filebot.sh #to make further execution to the moved file
 
 #Pyload
 DownloadFolder=$MediaDir/$1
