@@ -65,9 +65,9 @@ else
 		echo -e "$DATE \tINFO:\tFilebot aufraeumen" | tee -a $LogFile
 		cleaning | tee -a $LogFile
 		echo -e "$DATE \tINFO:\tNAS_XBMC - Library aufraeumen" | tee -a $LogFile
-		xbmc_clean | tee -a $LogFile
+		#xbmc_clean | tee -a $LogFile
 		echo -e "\n$DATE \tINFO:\tNAS_XBMC - Library scannen" | tee -a $LogFile
-		xbmc_scan | tee -a $LogFile
+		#xbmc_scan | tee -a $LogFile
 		exit
 	fi
 fi
