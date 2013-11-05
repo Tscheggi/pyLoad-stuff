@@ -32,33 +32,8 @@ Extras="clean=y artwork=y subtitles=de"
 #code
 
 echo -e "##############################" | tee -a $LogFile
-echo -e "$DATE \tINFO:\tpyLoad UNRAR_FINISHED" | tee -a $LogFile
+echo -e "$DATE \tINFO:\tpyLoad PACKAGE_FINISHED" | tee -a $LogFile
 
-
-
-# Am i the only instance - if not cancel
-# to prevent that 2 instances are gonna "fight" each other
-
-if [[ "`pidof -x $(basename $0) -o %PPID`" ]]; then
-        echo  -e "$DATE \tWarning:\tThis script already runs with PID `pidof -x $(basename $0) -o %PPID`" | tee -a $LogFile
-        exit
-fi
-
-
-
-# Is filebot already running?
-
-if ps ax | grep -v grep | grep -v $0 | grep $SERVICE > /dev/null
-then
-	echo -e "$DATE \tWarning:\t$SERVICE Already running - Abort!" | tee -a $LogFile
-else
-	sleep 5
-        echo -e "$DATE \tINFO:\t$SERVICE not running" | tee -a $LogFile
-        
-        
-		
-	# only run if pyload is done with extracting - pyLoad has to extract because of the Archive passwords
-	
 	cd "$DownloadFolder"
 	count=`ls -1 *.rar 2>/dev/null | wc -l`
 	if [ $count != 0 ]
@@ -83,5 +58,4 @@ else
 		cleaning | tee -a $LogFile
 		exit
 	fi
-fi
 
