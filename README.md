@@ -1,4 +1,6 @@
 pyLoad_filebot
 ==============
 
-pyLoad external automation with filebot
+pyLoad automation with the awesome program FileBot by rednoah
+
+
