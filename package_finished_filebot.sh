@@ -12,10 +12,10 @@ ExtScript=/root/filebot.sh 				# to make further execution to the moved file
 
 
 #Pyload
-# "/$1" is given by pyLoad after a package is extracted succesfully (/Downloads/packagefolder)
+# "/$1" is given by pyLoad after a package is extracted succesfully (/packagefolder)
 # so just edit MediaDir and BaseDir
-DownloadFolder=$MediaDir/$1 				# The given packagefolder from pyLoad to only process the finished files
-SERVICE=filebot 					# dont touch
+DownloadFolder=$DownloadDir/$1 				# The given packagefolder from pyLoad to only process the finished Package
+SERVICE=filebot 					# there should be no need to touch that ;)
 
 
 
@@ -77,9 +77,9 @@ else
 		}
 		
 		# Execute the functions#
-		echo -e "$DATE \tINFO:\tFilebot ausfuehren" | tee -a $LogFile
+		echo -e "$DATE \tINFO:\texecute Filebot" | tee -a $LogFile
 		sortiere | tee -a $LogFile
-		echo -e "$DATE \tINFO:\tFilebot aufraeumen" | tee -a $LogFile
+		echo -e "$DATE \tINFO:\tcleaning Clutter with Filebot" | tee -a $LogFile
 		cleaning | tee -a $LogFile
 		exit
 	fi
