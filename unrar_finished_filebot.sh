@@ -14,7 +14,6 @@ ExtScript=/root/filebot.sh 				# to make further execution to the moved file
 # "/$1" is given by pyLoad after a package is extracted succesfully (/Downloads/packagefolder)
 # so just edit MediaDir and BaseDir
 DownloadFolder=$MediaDir/$1 				# The given packagefolder from pyLoad to only process the finished files
-SERVICE=filebot 					# should be no need edit that
 
 
 
@@ -44,43 +43,19 @@ if [[ "`pidof -x $(basename $0) -o %PPID`" ]]; then
 fi
 
 
-
-# Is filebot already running?
-
-if ps ax | grep -v grep | grep -v $0 | grep $SERVICE > /dev/null
-then
-	echo -e "$DATE \tWarning:\t$SERVICE Already running - Abort!" | tee -a $LogFile
-else
-	sleep 5
-        echo -e "$DATE \tINFO:\t$SERVICE not running" | tee -a $LogFile
-        
-        
-		
-	# only run if pyload is done with extracting - pyLoad has to extract because of the Archive passwords
+	# Functions #
+	sortiere(){
+	filebot -script fn:amc "$DownloadFolder" --output "$MediaDir" --conflict override -non-strict --action move --def "$MovieFormat" "$Ignore" "$Execute" $Extras
+	}
+	cleaning(){
+	filebot -script fn:cleaner "$DownloadFolder" --def root=y "$Ignore" "exts=jpg|nfo|rar|etc" "terms=sample|trailer|etc"
+	}
 	
-	cd "$DownloadFolder"
-	count=`ls -1 *.rar 2>/dev/null | wc -l`
-	if [ $count != 0 ]
-	then
-		echo -e "$DATE \tWarning:\tThere are Archives... Abort!" | tee -a $LogFile
-	else
-		echo -e "$DATE \tINFO:\tNo RAR-file found in $1  - START FileBot!" | tee -a $LogFile
-		
-		
-		# Functions #
-		sortiere(){
-		filebot -script fn:amc "$DownloadFolder" --output "$MediaDir" --conflict override -non-strict --action move --def "$MovieFormat" "$Ignore" "$Execute" $Extras
-		}
-		cleaning(){
-		filebot -script fn:cleaner "$DownloadFolder" --def root=y "$Ignore" "exts=jpg|nfo|rar|etc" "terms=sample|trailer|etc"
-		}
-		
-		# Execute the functions#
-		echo -e "$DATE \tINFO:\tFilebot ausfuehren" | tee -a $LogFile
-		sortiere | tee -a $LogFile
-		echo -e "$DATE \tINFO:\tFilebot aufraeumen" | tee -a $LogFile
-		cleaning | tee -a $LogFile
-		exit
-	fi
-fi
+	# Execute the functions#
+	echo -e "$DATE \tINFO:\tFilebot ausfuehren" | tee -a $LogFile
+	sortiere | tee -a $LogFile
+	echo -e "$DATE \tINFO:\tFilebot aufraeumen" | tee -a $LogFile
+	cleaning | tee -a $LogFile
+	exit
+
 
