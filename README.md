@@ -11,3 +11,17 @@ These are scripts to have a automated sorting for Movies and Series you download
 - disable deep extraction
 - restart pyLoad
 - see the magic happen
+
+
+[Hook] HD-Area.org Fetcher Plugin
+==============
+
+Es checkt nach einem (selbst definierbarem) Interval HD-Area.org ab (Cinedubs, Filme, top-rls)
+Dabei kann man ein minimum an IMDB Rating angeben und die Qualität festlegen was dann schlussendlich dem pyLoad hinzugefügt werden soll.
+
+
+die Datei ist einzufügen in:
+~/.pyload/userplugins/hooks/
+pyload neustarten und Plugin aktivieren
+
+viel spass damit.
