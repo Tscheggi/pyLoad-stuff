@@ -49,7 +49,7 @@ class HDareaFetcher(Hook):
                     title = movieTit[i]
                     s = open("hdarea.txt").read()    
                     if title in s:
-                        self.core.log.info("HDArea: Already been added " +title[0:20])
+                        self.core.log.info("HDArea: Already been added:\t" +title[0:30])
                     else:
                         rating_txt = movieRating[i]
                         rating_float = rating_txt[5:8]
@@ -59,15 +59,15 @@ class HDareaFetcher(Hook):
                         list2 = ['S0','s0','season','Season','DOKU','doku','Doku']
                         if any(word in title for word in list) and rating > self.getConfig("rating"):
                             if any (word in title for word in list2):
-                                self.core.log.info("HDArea: rejected, because Series " +title[0:20])
+                                self.core.log.info("HDArea: rejected, because Series:\t" +title[0:30])
                             else: 
                                 f.write(title+"\n")                      
                                 f.write(link+"\n\n")
                                 self.core.api.addPackage(title.encode("utf-8"), link.split('"'), 1 if self.getConfig("queue") else 0)               
-                                self.core.log.info("HDArea: New Movie found " +title[0:20]+"... with rating ("+rating+")")
+                                self.core.log.info("HDArea: New Movie found:\t" +title[0:30]+"... with rating:\t"+rating)
                         else:
                             if rating < self.getConfig("rating"):
-                                self.core.log.info("HDArea: IMDB-Rating ("+rating+") to low: " +title[0:20])
+                                self.core.log.info("HDArea: IMDB-Rating ("+rating+") to low:\t" +title[0:30])
                             if not any(word in title for word in list):
-                                self.core.log.info("HDArea: Quality ("+self.getConfig("quality")+") mismatch: " +title[0:20])
+                                self.core.log.info("HDArea: Quality ("+self.getConfig("quality")+") mismatch:\t" +title[0:30])
             f.close()
