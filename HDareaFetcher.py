@@ -66,5 +66,5 @@ class HDareaFetcher(Hook):
                                 self.core.api.addPackage(title.encode("utf-8"), link.split('"'), 1 if self.getConfig("queue") else 0)               
                                 self.core.log.info("HDArea: New Movie found " +title[0:9]+"... with rating ("+rating+")")
                         else:
-                            self.core.log.info("HDArea: "+self.getConfig("quality")+") mismatch or rating ("+rating+") to low: " +title[0:9])
+                            self.core.log.info("HDArea: quality != ("+self.getConfig("quality")+") or rating ("+rating+") to low: " +title[0:9])
             f.close()
