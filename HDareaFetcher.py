@@ -27,8 +27,17 @@ class HDareaFetcher(Hook):
             movieLink = []
             movieRating = []
 
-            for title in soup.findAll("div", {"class" : "title"}):
-                movieTit.append(title.getText())
+            for title in soup.findAll("div", {"class" : "boxlinks"}):
+                for title2 in title.findAll("div", {"class" : "title"}):
+                    movieTit.append(title.getText())
+
+            for imdb in soup.findAll("div", {"class" : "boxrechts"}):
+                if 'IMDb' in imdb.getText():
+                    for aref in imdb.findAll('a'):
+                        movieRating.append(imdb.getText())
+                else:
+                    self.core.log.info("HDArea: No Rating for Movie:\t" +title[0:30])
+                    movieRating.append('0.1')
 
             for span in soup.findAll('span', attrs={"style":"display:inline;"},recursive=True):
                 for a in span.findAll('a'):
@@ -37,10 +46,6 @@ class HDareaFetcher(Hook):
                     if not 'ploaded' in a.getText():
                         if 'loudzer' in a.getText():
                             movieLink.append(a['href'])
-
-            for imdb in soup.findAll("div", {"class" : "boxrechts"}):
-                for aref in imdb.findAll('a'):
-                    movieRating.append(imdb.getText())
 
             f = open("hdarea.txt", "a")            
             if (len(movieLink) > 0) :
@@ -64,7 +69,7 @@ class HDareaFetcher(Hook):
                                 f.write(title+"\n")                      
                                 f.write(link+"\n\n")
                                 self.core.api.addPackage(title.encode("utf-8"), link.split('"'), 1 if self.getConfig("queue") else 0)               
-                                self.core.log.info("HDArea: New Movie found:\t" +title[0:30]+"... with rating:\t"+rating)
+                                self.core.log.info("HDArea: !!! New Movie found !!!:\t" +title[0:30]+"... with rating:\t"+rating)
                         else:
                             if rating < self.getConfig("rating"):
                                 self.core.log.info("HDArea: IMDB-Rating ("+rating+") to low:\t" +title[0:30])
