@@ -64,7 +64,7 @@ class HDareaFetcher(Hook):
                         list2 = ['S0','s0','season','Season','DOKU','doku','Doku']
                         if any(word in title for word in list) and rating > self.getConfig("rating"):
                             if any (word in title for word in list2):
-                                self.core.log.info("HDArea: REJECTED! its not a Movie:\t\t" +title[0:30])
+                                self.core.log.info("HDArea: REJECTED! not a Movie:\t\t" +title[0:30])
                             else: 
                                 f.write(title+"\n")                      
                                 f.write(link+"\n\n")
