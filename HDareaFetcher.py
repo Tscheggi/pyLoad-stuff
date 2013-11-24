@@ -29,7 +29,7 @@ class HDareaFetcher(Hook):
 
             for title in soup.findAll("div", {"class" : "boxlinks"}):
                 for title2 in title.findAll("div", {"class" : "title"}):
-                    movieTit.append(title.getText())
+                    movieTit.append(title2.getText())
 
             for imdb in soup.findAll("div", {"class" : "boxrechts"}):
                 if 'IMDb' in imdb.getText():
