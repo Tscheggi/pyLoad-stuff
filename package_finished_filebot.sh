@@ -36,6 +36,12 @@ echo -e "$logline ..........Package_finished" | tee -a $LogFile
                 cleaning(){
                 filebot -script fn:cleaner "$DownloadFolder" --def root=y "$Ignore" "exts=jpg|nfo|rar|etc" "terms=sample|trailer|etc"
                 }
+                xbmc_clean(){
+                curl -s -d '{"jsonrpc":"2.0","method":"VideoLibrary.Clean","id":1}' -H 'content-type: application/json;' http://192.168.0.107:8585/jsonrpc?VideoLibrary.Clean
+                }
+                xbmc_scan(){
+                curl -s -d '{"jsonrpc":"2.0","method":"VideoLibrary.Scan","id":1}' -H 'content-type: application/json;' http://192.168.0.107:8585/jsonrpc?VideoLibrary.Scan
+                }
 
                 # Ausfuehren #
                 # Execute the functions#
@@ -43,6 +49,10 @@ echo -e "$logline ..........Package_finished" | tee -a $LogFile
                 sortiere
                 echo -e "$logline cleaning Clutter with Filebot" | tee -a $LogFile
                 cleaning
+                #echo -e "$logline XBMC clean" | tee -a $LogFile
+                #xbmc_clean
+                #echo -e "$logline XBMC scan" | tee -a $LogFile
+                #xbmc_scan
                 exit
 
         fi
