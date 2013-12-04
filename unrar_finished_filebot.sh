@@ -12,6 +12,7 @@ ExtScript=/root/filebot.sh
 # Pyload
 DownloadFolder=$MediaDir/$1
 SERVICE=unrar
+SERVICE2=filebot
 
 # FileBot-defs
 MovieFormat="movieFormat=Movies/{net.sourceforge.filebot.WebServices.TMDb.getMovieInfo(movie, Locale.GERMAN).name} {'('+y+')'}/{net.sourceforge.filebot.WebServices.TMDb.getMovieInfo(movie, Locale.GERMAN).name} {'('+y+')'}"
@@ -22,13 +23,32 @@ Extras="clean=y artwork=n subtitles=de"
 echo -e "$logline ##########################" | tee -a $LogFile
 echo -e "$logline ............unrar_finished" | tee -a $LogFile
 
-        # check if there is a unrar process going on
-        while ps ax | grep -v grep | grep -v $0 | grep $SERVICE > /dev/null
-                do
-                        echo -e "$logline $SERVICE still running ...WAITING..." | tee -a $LogFile
-                        sleep 10
-                done
+# check if there is a unrar process running
+x=1
+while (ps ax | grep -v grep | grep -v $0 | grep $SERVICE > /dev/null && [ $x -le 2 ])
+do
+        echo -e "$logline $SERVICE still running ...WAITING..." | tee -a $LogFile
+        sleep 15
+        x=$(( $x + 1 ))
+done
 
+# check if filebot is running
+y=1
+while (ps ax | grep -v grep | grep -v $0 | grep $SERVICE2 > /dev/null  && [ $y -le 3 ])
+        do
+                echo -e "$logline $SERVICE2 already running ..wait 60 secs" | tee -a $LogFile
+                sleep 60
+                y=$(( $y + 1 ))
+        done
+
+# final check before running
+if  (ps ax | grep -v grep | grep -v $0 | grep $SERVICE > /dev/null ||  ps ax | grep -v grep | grep -v $0 | grep $SERVICE2)
+        
+        then
+                echo -e "$logline $SERVICE or $SERVICE2 still running - ABORT" | tee -a $LogFile
+                exit
+
+        else
         # Functions #
         sortiere(){
         filebot -script fn:amc "$DownloadFolder" --output "$MediaDir" --conflict override -non-strict --action move --def "$MovieFormat" "$Ignore" "$Execute" $Extras
@@ -52,4 +72,4 @@ echo -e "$logline ............unrar_finished" | tee -a $LogFile
         #xbmc_clean
         #echo -e "$logline XBMC scan" | tee -a $LogFile
         #xbmc_scan
-exit
+fi
