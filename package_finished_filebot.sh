@@ -1,13 +1,17 @@
 #!/bin/bash
 
-# Globale Variablen #
-DATE=$(date +%d.%m.%Y\ %H:%M:%S)
+# Global Variables #
+
 BaseDir=/media/5a24e136-09b9-48e1-95db-b44d5db3e28a
-DownloadDir=${BaseDir}/Medien/Downloads
-MediaDir=${BaseDir}/Medien
+DownloadDir=${BaseDir}/Medien/Downloads #where pyload downloads the stuff to
+MediaDir=${BaseDir}/Medien # where the files are moved to 
+
+# no need to edit that
+DATE=$(date +%d.%m.%Y\ %H:%M:%S)
 logline=$(date +'%d.%m.%Y')" "$(date +'%H:%M:%S')" FileBot"
-LogFile=/root/.pyload/Logs/log.txt                      # LogFile
-ExtScript=/root/filebot.sh
+LogFile=/root/.pyload/Logs/log.txt  # edit if pyload installation is somewhere else
+ExtScript=/root/filebot.sh # external bash to run further commands onto the moved files
+
 
 #Pyload
 DownloadFolder=$DownloadDir/$1
