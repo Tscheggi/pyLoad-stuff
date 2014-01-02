@@ -26,7 +26,7 @@ touch -c "$1"
 echo "$logline CHMOD 777" | tee -a $LogFile
 chmod 777 "$1"
 echo "$logline Entferne andersprachige Tonspur" | tee -a $LogFile
-python /root/mkvremove.py "${1%/*.mkv}"
+python /root/mkv_ger.py "${1%/*.mkv}"
 echo "$logline DTS Tracks zu AC3 wandeln" | tee -a $LogFile
 /mkvdts2ac3/mkvdts2ac3.sh -w "$tmpFolder" -n "$1"
 
