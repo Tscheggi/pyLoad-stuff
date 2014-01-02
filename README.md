@@ -12,14 +12,21 @@ These are scripts to have a automated sorting for Movies and Series you download
 - restart pyLoad
 - see the magic happen
 
+
+
 FileBot.sh
 ==============
 Some additional stuff happening to the moved File
 
+
+
 mkv_ger.py
 ==============
 Filebot.sh uses this script to remove all non-ger Audiotracks
+
 http://forum.videohelp.com/threads/343271-BULK-remove-non-English-tracks-from-MKV-container?p=2201831&viewfull=1#post2201831
+
+
 
 
 [Hook] HD-Area.org Fetcher Plugin
