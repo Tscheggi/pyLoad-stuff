@@ -18,7 +18,7 @@ FileBot.sh
 Some additional stuff happening to the moved File
  - remove non-german Tracks (to save space on my NASHD)
  - Convert DTS to AC3 (to save space on my NASHD)
- - modify creation date (to have it stored under "recently added" on XBMC)
+ - modify creation date (to have it stored "recently added" in XBMC)
  - make it read / writeable for everyone (something i need to do)
  - send email with location of the file and changed filesize (nice to have)
 
