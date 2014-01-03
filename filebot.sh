@@ -41,7 +41,7 @@ chmod 777 "$1"
 FileSize2=$(ls -lah "$1" | awk '{ print $5}')
 
 echo "$logline E-Mail senden" | tee -a $LogFile
-echo -e "Verschoben nach:\t~${1##*/Medien}\n\nDateigröße vorher:\t$FileSize1\nDateigröße danach:\t$FileSize2\n\n\nSincerly\nyour lovely NAS" | mailx -s "INFO: $mailtitle runtergeladen" hannes.mueller87@gmail.com;
+echo -e "Verschoben nach:\t~${1##*/Medien}\n\nDateigröße vorher:\t$FileSize1\nDateigröße danach:\t$FileSize2\n\n\nSincerly\nyour lovely NAS" | mailx -s "INFO: $mailtitle runtergeladen" your@mail.com;
 else
 echo "$logline $mailtitle_ext ist keine MKV" | tee -a $LogFile
 fi
