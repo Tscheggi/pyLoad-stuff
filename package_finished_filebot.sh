@@ -16,7 +16,7 @@ SERVICE=filebot
 #FileBot-defs
 MovieFormat="movieFormat=Movies/{net.sourceforge.filebot.WebServices.TMDb.getMovieInfo(movie, Locale.GERMAN).name} {'('+y+')'}/{net.sourceforge.filebot.WebServices.TMDb.getMovieInfo(movie, Locale.GERMAN).name} {'('+y+')'}"
 Ignore="ignore=\b(?i:doku)\b"
-Execute="exec=cd /root/ ./$ExtScript \"{file}\""
+Execute="exec=cd /root/ && ./$ExtScript \"{file}\""
 Extras="clean=y artwork=n"
 
 echo -e "$logline ##########################" | tee -a $LogFile
