@@ -22,7 +22,7 @@ then
 
   echo  "$logline ##########################" | tee -a $LogFile
   echo  "$logline Dateihandling nachdem FILEBOT fertig ist" | tee -a $LogFile
-  echo  "$logline Datei wurde nach $1 verschoben" | tee -a $LogFile
+  echo  "$logline Datei wurde nach ~${1##*/Medien} verschoben" | tee -a $LogFile
   cd /
 
   echo "$logline Entferne andersprachige Tonspur" | tee -a $LogFile
