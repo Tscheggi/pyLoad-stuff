@@ -16,32 +16,54 @@ tmpFolder=$MediaDir/tmp
 mailtitle_ext=${1##*/}
 mailtitle=${mailtitle_ext%.*}
 
-## nur dateien mit der Endung "mkv"
+## nur dateien mit der Endung "mkv" 
 if [[ $1 =~ .*mkv.* ]]
 then
+	echo  "$logline ##########################" | tee -a $LogFile
+	echo  "$logline Dateihandling nachdem FILEBOT fertig ist" | tee -a $LogFile
+	echo  "$logline Datei wurde nach ~${1%/*.mkv}/* verschoben" | tee -a $LogFile
+	DUCMD="$(which \du) -m"
+	FileSize1=$($DUCMD "$1" | cut -f1)
+	FileSize12=$(echo "$FileSize1" | sed -e :a -e 's/\(.*[0-9]\)\([0-9]\{3\}\)/\1.\2/;ta')
+	cd /
 
-FileSize1=$(ls -lah "$1" | awk '{ print $5}')
-echo  "$logline ##########################" | tee -a $LogFile
-echo  "$logline Dateihandling nachdem FILEBOT fertig ist" | tee -a $LogFile
-echo  "$logline Datei wurde nach ~${1%/*.mkv}/* verschoben" | tee -a $LogFile
-cd /
+	echo "$logline Entferne andersprachige Tonspur" | tee -a $LogFile
+	python /root/mkv_ger.py "${1%/*.mkv}"
+        FileSize2=$($DUCMD "$1" | cut -f1)
+	DIFF1=$(($FileSize1 - $FileSize2))
+	DIFF12=$(echo "$DIFF1" | sed -e :a -e 's/\(.*[0-9]\)\([0-9]\{3\}\)/\1.\2/;ta')
 
-echo "$logline Entferne andersprachige Tonspur" | tee -a $LogFile
-python /root/mkv_ger.py "${1%/*.mkv}"
+	echo "$logline DTS Tracks zu AC3 wandeln" | tee -a $LogFile
+	/mkvdts2ac3/mkvdts2ac3.sh -w "$tmpFolder" -n "$1"
+	FileSize3=$($DUCMD "$1" | cut -f1)
+	DIFF2=$(($FileSize2 - $FileSize3))
+	DIFF22=$(echo "$DIFF2" | sed -e :a -e 's/\(.*[0-9]\)\([0-9]\{3\}\)/\1.\2/;ta')
 
-echo "$logline DTS Tracks zu AC3 wandeln" | tee -a $LogFile
-/mkvdts2ac3/mkvdts2ac3.sh -w "$tmpFolder" -n "$1"
+	echo "$logline Neues Erstelldatum" | tee -a $LogFile
+	touch -c "$1"
 
-echo "$logline Neues Erstelldatum" | tee -a $LogFile
-touch -c "$1"
+	echo "$logline CHMOD 777" | tee -a $LogFile
+	chmod 777 "$1"
+	Final=$($DUCMD "$1" | cut -f1)
+	Final2=$(echo "$Final" | sed -e :a -e 's/\(.*[0-9]\)\([0-9]\{3\}\)/\1.\2/;ta')
 
-echo "$logline CHMOD 777" | tee -a $LogFile
-chmod 777 "$1"
+	echo -e "\nOriginal\t = \t$FileSize12 GB"
+	echo -e "AudioTrack\t = \t$DIFF12 GB"
+	echo -e "DTS2AC3\t\t = \t$DIFF22 GB"
+	echo -e "FinalSize\t = \t$Final2 GB\n"
+	# schlaue mail ;)
 
-FileSize2=$(ls -lah "$1" | awk '{ print $5}')
+	send_email(){
+	if [ $FileSize1 == $FileSize2 -a $FileSize2 == $FileSize3 ]; then
+		echo "$logline E-Mail senden (nichts komprimiert)" | tee -a $LogFile
+		echo -e "Verschoben nach:\t ~${1%/*.mkv}\n\nKeine Platzsparmaßnahmen stattgefunden\nFinale Größe:\t$Final2 MB\n\n\nSincerly\nyour lovely NAS" | mailx -s "INFO: $mailtitle runtergeladen" your@mail.com;
+	else
+		echo "$logline E-Mail senden (verkleinert)" | tee -a $LogFile
+		echo -e "Verschoben nach:\t ~${1%/*.mkv} \n\nOriginal:\t$FileSize12 MB\nAudioSpur entfernt:\t$DIFF12 MB\nAudioSpur komprimiert:\t$DIFF22 MB\nFinale Größe:\t$Final2 MB\n\n\nSincerly\nyour lovely NAS" | mailx -s "INFO: $mailtitle runtergeladen" your@mail.com;
+	fi
+	}
 
-echo "$logline E-Mail senden" | tee -a $LogFile
-echo -e "Verschoben nach:\t~${1##*/Medien}\n\nDateigröße vorher:\t$FileSize1\nDateigröße danach:\t$FileSize2\n\n\nSincerly\nyour lovely NAS" | mailx -s "INFO: $mailtitle runtergeladen" your@mail.com;
+	send_email
 else
-echo "$logline $mailtitle_ext ist keine MKV" | tee -a $LogFile
+	echo "$logline $mailtitle_ext ist keine MKV" | tee -a $LogFile
 fi
