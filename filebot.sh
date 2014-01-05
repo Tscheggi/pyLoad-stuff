@@ -56,10 +56,10 @@ then
 	send_email(){
 	if [ $FileSize1 == $FileSize2 -a $FileSize2 == $FileSize3 ]; then
 		echo "$logline E-Mail senden (nichts komprimiert)" | tee -a $LogFile
-		echo -e "Verschoben nach:\t ~${1%/*.mkv}\n\nKeine Platzsparmaßnahmen stattgefunden\nFinale Größe:\t$Final2 MB\n\n\nSincerly\nyour lovely NAS" | mailx -s "INFO: $mailtitle runtergeladen" your@mail.com;
+		echo -e "Verschoben nach:\t ~${1##*/Medien}\n\nKeine Platzsparmaßnahmen stattgefunden\nFinale Größe:\t$Final2 MB\n\n\nSincerly\nyour lovely NAS" | mailx -s "INFO: $mailtitle runtergeladen" your@mail.com;
 	else
 		echo "$logline E-Mail senden (verkleinert)" | tee -a $LogFile
-		echo -e "Verschoben nach:\t ~${1%/*.mkv} \n\nOriginal:\t$FileSize12 MB\nAudioSpur entfernt:\t$DIFF12 MB\nAudioSpur komprimiert:\t$DIFF22 MB\nFinale Größe:\t$Final2 MB\n\n\nSincerly\nyour lovely NAS" | mailx -s "INFO: $mailtitle runtergeladen" your@mail.com;
+		echo -e "Verschoben nach:\t ~${1##*/Medien}\n\nOriginal:\t$FileSize12 MB\nAudioSpur entfernt:\t$DIFF12 MB\nAudioSpur komprimiert:\t$DIFF22 MB\nFinale Größe:\t$Final2 MB\n\n\nSincerly\nyour lovely NAS" | mailx -s "INFO: $mailtitle runtergeladen" your@mail.com;
 	fi
 	}
 
