@@ -67,8 +67,8 @@ if  (ps ax | grep -v grep | grep -v $0 | grep $SERVICE > /dev/null ||  ps ax | g
 		sortiere 
 		echo -e "$logline cleaning Clutter with Filebot" | tee -a $LogFile
 		cleaning 
-		echo -e "$logline XBMC clean" | tee -a $LogFile
-		xbmc_clean
-		echo -e "$logline XBMC scan" | tee -a $LogFile
-		xbmc_scan 
+		#echo -e "$logline XBMC clean" | tee -a $LogFile
+		#xbmc_clean
+		#echo -e "$logline XBMC scan" | tee -a $LogFile
+		#xbmc_scan 
  fi
