@@ -11,9 +11,10 @@ LANG = "ger"
 
 # set this to the path for mkvmerge
 MKVMERGE = "mkvmerge"
-
-AUDIO_RE    = re.compile(r"Spur ID (\d+): audio \([A-Z0-9_/]+\) [number:\d+ uid:\d+ codec_id:[A-Z0-9_/]+ codec_private_length:\d+ language:([a-z]{3})")
-SUBTITLE_RE = re.compile(r"Spur ID (\d+): subtitles \([A-Z0-9_/]+\) [number:\d+ uid:\d+ codec_id:[A-Z0-9_/]+ codec_private_length:\d+ language:([a-z]{3})(?: track_name:\w*)? default_track:[01]{1} forced_track:([01]{1})")
+AUDIO_RE    = re.compile(r"Track ID (\d+): audio \([A-Z0-9_/]+\) \[language:([a-z]{3}) default_track:[01] forced_track:[01]\]")
+SUBTITLE_RE = re.compile(r"Track ID (\d+): subtitles \([A-Z0-9_/]+\) \[language:([a-z]{3}) default_track:[01] forced_track:[01]\]")
+#AUDIO_RE    = re.compile(r"Spur ID (\d+): audio \([A-Z0-9_/]+\) [number:\d+ uid:\d+ codec_id:[A-Z0-9_/]+ codec_private_length:\d+ language:([a-z]{3})")
+#SUBTITLE_RE = re.compile(r"Spur ID (\d+): subtitles \([A-Z0-9_/]+\) [number:\d+ uid:\d+ codec_id:[A-Z0-9_/]+ codec_private_length:\d+ language:([a-z]{3})(?: track_name:\w*)? default_track:[01]{1} forced_track:([01]{1})")
 
 if len(sys.argv) < 2:
     print "Please supply an input directory"
