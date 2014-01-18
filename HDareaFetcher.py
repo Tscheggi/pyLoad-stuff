@@ -19,7 +19,7 @@ class HDareaFetcher(Hook):
     def setup(self):
         self.interval = self.getConfig("interval") * 60 
     def periodical(self):
-        for site in ('Cinedubs', 'top-rls', 'movies'):
+        for site in ('Cinedubs', 'top-rls', 'movies', 'Old_Stuff'):
             address = ('http://hd-area.org/index.php?s=' + site)
             page = urllib2.urlopen(address).read()
             soup = BeautifulSoup(page)
@@ -27,25 +27,33 @@ class HDareaFetcher(Hook):
             movieLink = []
             movieRating = []
 
-            for title in soup.findAll("div", {"class" : "boxlinks"}):
-                for title2 in title.findAll("div", {"class" : "title"}):
-                    movieTit.append(title2.getText())
-
-            for imdb in soup.findAll("div", {"class" : "boxrechts"}):
-                if 'IMDb' in imdb.getText():
-                    for aref in imdb.findAll('a'):
-                        movieRating.append(imdb.getText())
-                else:
-                    self.core.log.info("HDArea: No Rating for this Movie:\t\t" +title[0:30])
-                    movieRating.append('0.1')
-
-            for span in soup.findAll('span', attrs={"style":"display:inline;"},recursive=True):
-                for a in span.findAll('a'):
-                    if 'ploaded' in a.getText():
-                        movieLink.append(a['href'])
-                    if not 'ploaded' in a.getText():
-                        if 'loudzer' in a.getText():
+            try:
+                for title in soup.findAll("div", {"class" : "boxlinks"}):
+                    for title2 in title.findAll("div", {"class" : "title"}):
+                        movieTit.append(title2.getText())
+            except:
+                pass
+            try:
+                for imdb in soup.findAll("div", {"class" : "boxrechts"}):
+                    if 'IMDb' in imdb.getText():
+                        for aref in imdb.findAll('a'):
+                            movieRating.append(imdb.getText())
+                    if not 'IMDb' in imdb.getText():
+                        self.core.log.info("HDArea: No Rating for this Movie:\t\t" +title[0:30])
+                        movieRating.append('0.1')
+            except Exception:
+                #self.core.log.info("HDArea: No Rating for this Movie:\t\t" +title[0:30])
+                movieRating.append('0.1')
+            try:
+                for span in soup.findAll('span', attrs={"style":"display:inline;"},recursive=True):
+                    for a in span.findAll('a'):
+                        if 'ploaded' in a.getText():
                             movieLink.append(a['href'])
+                        if not 'ploaded' in a.getText():
+                            if 'loudzer' in a.getText():
+                                movieLink.append(a['href'])
+            except:
+                pass
 
             f = open("hdarea.txt", "a")            
             if (len(movieLink) > 0) :
