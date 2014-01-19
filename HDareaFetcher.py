@@ -38,8 +38,7 @@ class HDareaFetcher(Hook):
                     if 'IMDb' in imdb.getText():
                         for aref in imdb.findAll('a'):
                             movieRating.append(imdb.getText())
-                    if not 'IMDb' in imdb.getText():
-                        self.core.log.info("HDArea: No Rating for this Movie:\t\t" +title[0:30])
+                    else:
                         movieRating.append('0.1')
             except Exception:
                 #self.core.log.info("HDArea: No Rating for this Movie:\t\t" +title[0:30])
