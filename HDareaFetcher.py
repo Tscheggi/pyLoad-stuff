@@ -19,7 +19,7 @@ class HDareaFetcher(Hook):
     def setup(self):
         self.interval = self.getConfig("interval") * 60 
     def periodical(self):
-        for site in ('Cinedubs', 'top-rls', 'movies', 'Old_Stuff'):
+        for site in ('Cinedubs', 'top-rls', 'movies', 'Old_Stuff', 'msd'):
             address = ('http://hd-area.org/index.php?s=' + site)
             page = urllib2.urlopen(address).read()
             soup = BeautifulSoup(page)
