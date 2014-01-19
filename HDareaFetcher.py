@@ -61,7 +61,7 @@ class HDareaFetcher(Hook):
                     title = movieTit[i]
                     s = open("hdarea.txt").read()    
                     if title in s:
-                        self.core.log.info("HDArea: Already been added:\t\t" +title[0:30])
+                        self.core.log.debug("HDArea: Already been added:\t\t" +title[0:30])
                     else:
                         rating_txt = movieRating[i]
                         rating_float = rating_txt[5:8]
@@ -71,7 +71,7 @@ class HDareaFetcher(Hook):
                         list2 = ['S0','s0','season','Season','DOKU','doku','Doku']
                         if any(word in title for word in list) and rating > self.getConfig("rating"):
                             if any (word in title for word in list2):
-                                self.core.log.info("HDArea: REJECTED! not a Movie:\t\t" +title[0:30])
+                                self.core.log.debug("HDArea: REJECTED! not a Movie:\t\t" +title[0:30])
                             else: 
                                 f.write(title+"\n")                      
                                 f.write(link+"\n\n")
@@ -79,7 +79,7 @@ class HDareaFetcher(Hook):
                                 self.core.log.info("HDArea: !!! ACCEPTED !!!:\t\t" +title[0:30]+"... with rating:\t"+rating)
                         else:
                             if rating < self.getConfig("rating"):
-                                self.core.log.info("HDArea: IMDB-Rating ("+rating+") to low:\t\t" +title[0:30])
+                                self.core.log.debug("HDArea: IMDB-Rating ("+rating+") to low:\t\t" +title[0:30])
                             if not any(word in title for word in list):
-                                self.core.log.info("HDArea: Quality ("+self.getConfig("quality")+") mismatch:\t\t" +title[0:30])
+                                self.core.log.debug("HDArea: Quality ("+self.getConfig("quality")+") mismatch:\t\t" +title[0:30])
             f.close()
