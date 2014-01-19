@@ -51,6 +51,9 @@ class HDareaFetcher(Hook):
                         if not 'ploaded' in a.getText():
                             if 'loudzer' in a.getText():
                                 movieLink.append(a['href'])
+                            if not 'loudzer' in a.getText():
+                                if 'hare-Online' in a.getText():
+                                    movieLink.append(a['href'])
             except:
                 pass
 
