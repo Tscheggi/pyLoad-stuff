@@ -13,7 +13,7 @@ class HDareaFetcher(Hook):
                   ("queue", "bool", "move Movies directly to Queue", "False"),
                   ("quality", "str", "720p or 1080p", "720p"),
                   ("rating","float","min. IMDB rating","6.1"),
-                  ("hoster", "str", "Preferred Hoster (seperated by ;)","uploaded;cloudzer;share-online")]
+                  ("hoster", "str", "Preferred Hoster (seperated by ;)","uploaded;cloudzer")]
     __author_name__ = ("Gutz-Pilz")
     __author_mail__ = ("")
 
