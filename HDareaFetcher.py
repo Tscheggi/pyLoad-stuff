@@ -6,7 +6,7 @@ import re
 
 class HDareaFetcher(Hook):
     __name__ = "HDareaFetcher"
-    __version__ = "0.1"
+    __version__ = "0.5"
     __description__ = "Checks HD-AREA.org for new Movies. "
     __config__ = [("activated", "bool", "Activated", "False"),
                   ("interval", "int", "Check interval in minutes", "60"),
