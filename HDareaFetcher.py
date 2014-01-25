@@ -38,7 +38,7 @@ class HDareaFetcher(Hook):
                             for aref in imdb.findAll('a'):
                                 movieRating.append(imdb.getText())
                         if not 'IMDb' in imdb.getText():
-                            movieRating.append('0.1')
+                            movieRating.append('IMDb 0.1/10')
             except:
                 pass
 
@@ -77,11 +77,11 @@ class HDareaFetcher(Hook):
                             else: 
                                 f.write(title+"\n")                      
                                 f.write(link+"\n\n")
-                                self.core.api.addPackage(title.encode("utf-8"), link.split('"'), 1 if self.getConfig("queue") else 0)               
+                                self.core.api.addPackage(title.encode("utf-8")+" IMDb: "+rating, link.split('"'), 1 if self.getConfig("queue") else 0)               
                                 self.core.log.info("HDArea: !!! ACCEPTED !!!:\t\t" +title[0:30]+"... with rating:\t"+rating)
                         else:
                             if rating < self.getConfig("rating"):
-                                self.core.log.debug("HDArea: IMDB-Rating ("+rating+") to low:\t\t" +title[0:30])
+                                self.core.log.debug("HDArea: IMDb-Rating ("+rating+") to low:\t\t" +title[0:30])
                             if not any(word in title for word in list):
                                 self.core.log.debug("HDArea: Quality ("+self.getConfig("quality")+") mismatch:\t\t" +title[0:30])
             f.close()
