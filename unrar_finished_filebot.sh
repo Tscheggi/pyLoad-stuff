@@ -24,8 +24,7 @@ Extras="clean=y artwork=n"
 echo -e "$logline ##########################" | tee -a $LogFile
 echo -e "$logline ............unrar_finished" | tee -a $LogFile
         sleep 10
-        cd "$DownloadFolder"
-        count=`ls -1 *.rar 2>/dev/null | wc -l`
+        count=`find "$DownloadFolder" -name "*.rar" -o -name "*.r0*" 2>/dev/null | wc -l`
         if [ $count != 0 ]
         then
                 echo -e "$logline ABORT! Still some Archives" | tee -a $LogFile
