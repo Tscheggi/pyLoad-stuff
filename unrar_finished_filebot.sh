@@ -57,9 +57,9 @@ else
 		sortiere
 		logit "cleaning Clutter with FileBot"
 		cleaning
-		logit "XBMC clean"
+		#logit "XBMC clean"
 		#xbmc_clean
-		logit "XBMC scan"
+		#logit "XBMC scan"
 		#xbmc_scan
 exit
 fi
