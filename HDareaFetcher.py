@@ -60,7 +60,38 @@ class HDareaFetcher(Hook):
             if (len(movieLink) > 0) :
                 for i in range(len(movieTit)):                 
                     link = movieLink[i]
+                    #cleaning the title from unnecessary stuff
                     title = movieTit[i]
+                    title = title.lower()
+                    title = title.replace('.german','')
+                    title = title.replace('.bluray','')
+                    title = re.sub(".(h|x)264(-|.)\S+", "", title)
+                    title = re.sub(".complete-\S+", "", title)
+                    title = re.sub(".remux-\S+", "", title)
+                    title = re.sub(".web\S+", "", title)
+                    title = re.sub(".nfo(-\S+|)", "", title)
+                    title = title.replace('.dual','')
+                    title = title.replace('.avc','')
+                    title = title.replace('.dl','')
+                    title = title.replace('.ac3ld','')
+                    title = title.replace('.ac3d','')
+                    title = title.replace('.ac3','')
+                    title = title.replace('.dtshd','')
+                    title = title.replace('.dtsd','')
+                    title = title.replace('.dts','')
+                    title = title.replace('.dd5.1','')
+                    title = title.replace('.dtsd','')
+                    title = title.replace('.5.1','')
+                    title = title.replace('.hddvd','')
+                    title = title.replace('.md','')
+                    title = title.replace('.bluray','')
+                    title = title.replace('.multi','')
+                    title = title.replace('.disc1+2','')
+                    title = title.replace('.extended','')
+                    title = title.replace('.dubbed','')
+                    title = title.replace('.ml','')
+                    title = title.replace('.flac','')
+                    title = title.replace('.read',' ')
                     s = open("hdarea.txt").read()    
                     if title in s:
                         self.core.log.debug("HDArea: Already been added:\t\t" +title[0:30])
