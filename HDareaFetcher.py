@@ -6,7 +6,7 @@ import re
 
 class HDareaFetcher(Hook):
     __name__ = "HDareaFetcher"
-    __version__ = "0.5"
+    __version__ = "0.6"
     __description__ = "Checks HD-AREA.org for new Movies. "
     __config__ = [("activated", "bool", "Activated", "False"),
                   ("interval", "int", "Check interval in minutes", "60"),
@@ -70,18 +70,18 @@ class HDareaFetcher(Hook):
                         rating = rating_float.replace(',','.')    
                         rating = rating.replace('-/','0.')
                         list = [self.getConfig("quality")]
-                        list2 = ['S0','s0','season','Season','DOKU','doku','Doku']
+                        list2 = ['S0','s0','season','Season','DOKU','doku','Doku','s1','s2','s3','s4','s5']
                         if any(word in title for word in list) and rating > self.getConfig("rating"):
                             if any (word in title for word in list2):
-                                self.core.log.debug("HDArea: REJECTED! not a Movie:\t\t" +title[0:30])
+                                self.core.log.debug("HDArea: REJECTED! not a Movie:\t\t" +title)
                             else: 
                                 f.write(title+"\n")                      
                                 f.write(link+"\n\n")
                                 self.core.api.addPackage(title.encode("utf-8")+" IMDb: "+rating, link.split('"'), 1 if self.getConfig("queue") else 0)               
-                                self.core.log.info("HDArea: !!! ACCEPTED !!!:\t\t" +title[0:30]+"... with rating:\t"+rating)
+                                self.core.log.info("HDArea: !!! ACCEPTED !!!:\t\t" +title+"... with rating:\t"+rating)
                         else:
                             if rating < self.getConfig("rating"):
-                                self.core.log.debug("HDArea: IMDb-Rating ("+rating+") to low:\t\t" +title[0:30])
+                                self.core.log.debug("HDArea: IMDb-Rating ("+rating+") to low:\t\t" +title)
                             if not any(word in title for word in list):
-                                self.core.log.debug("HDArea: Quality ("+self.getConfig("quality")+") mismatch:\t\t" +title[0:30])
+                                self.core.log.debug("HDArea: Quality ("+self.getConfig("quality")+") mismatch:\t\t" +title)
             f.close()
