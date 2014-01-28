@@ -92,6 +92,9 @@ class HDareaFetcher(Hook):
                     title = title.replace('.ml','')
                     title = title.replace('.flac','')
                     title = title.replace('.read',' ')
+                    title = title.replace('.unrated','')
+                    title = title.replace('.directors','')
+                    title = title.replace('.cut','')
                     s = open("hdarea.txt").read()    
                     if title in s:
                         self.core.log.debug("HDArea: Already been added:\t\t" +title[0:30])
