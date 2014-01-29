@@ -73,6 +73,7 @@ class HDareaFetcher(Hook):
                     title = title.replace('.dual','')
                     title = title.replace('.avc','')
                     title = title.replace('.dl','')
+                    title = title.replace('.ac3md','')
                     title = title.replace('.ac3ld','')
                     title = title.replace('.ac3d','')
                     title = title.replace('.ac3','')
